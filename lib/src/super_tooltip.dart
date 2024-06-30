@@ -52,6 +52,7 @@ class SuperTooltip extends StatefulWidget {
   final EdgeInsetsGeometry bubbleDimensions;
   final bool hideTooltipOnTap;
   final bool hideTooltipOnBarrierTap;
+  final bool disableShowTooltipOnTap;
 
   //filter
   final bool showDropBoxFilter;
@@ -67,8 +68,8 @@ class SuperTooltip extends StatefulWidget {
     this.onShow,
     this.onHide,
     /**
-     * showCloseButton 
-     * This will enable the closeButton 
+     * showCloseButton
+     * This will enable the closeButton
      */
     this.showCloseButton = false,
     this.closeButtonType = CloseButtonType.inside,
@@ -126,6 +127,7 @@ class SuperTooltip extends StatefulWidget {
     this.sigmaY = 5.0,
     this.showDropBoxFilter = false,
     this.hideTooltipOnBarrierTap = true,
+    this.disableShowTooltipOnTap = false,
   })  : assert(showDropBoxFilter ? showBarrier ?? false : true,
             'showDropBoxFilter or showBarrier can\'t be false | null'),
         super(key: key);
@@ -212,7 +214,7 @@ class _SuperTooltipState extends State<SuperTooltip>
     return CompositedTransformTarget(
       link: _layerLink,
       child: GestureDetector(
-        onTap: _superTooltipController!.showTooltip,
+        onTap: widget.disableShowTooltipOnTap == true ? null : _superTooltipController!.showTooltip,
         onLongPress: widget.onLongPress,
         child: widget.child,
       ),
